@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ComFree-Sim: A GPU-Parallel Analytical Contact Physics Engine for
+Accelerating Contact-Rich Robotics Simulation and Control</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    .emphasized-first-letter::first-letter {
+      font-family: 'Playfair Display', serif; /* Use your chosen swash font here */
+      font-size: 2em; /* Adjust size as needed */
+      font-weight: bold; /* Optional: makes the letter bold */
+      color: #000; /* Optional: change color if needed */
+      float: left; /* Optional: positions the letter to the left */
+      margin-right: 0.1em; /* Optional: space between the letter and the rest of the text */
+    }
+
+    .tab-font {
+      font-weight: bold;
+    }
+  </style>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+</head>
+<body>
+
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav> -->
+
+
+<!-- author and links section -->  
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">ComFree-Sim: A GPU-Parallel Analytical Contact Physics Engine for Accelerating Contact-Rich Robotics Simulation and Control</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://asu-iris.github.io/" target="_blank">Chetan Borse<sup>1</sup>, </a>&nbsp&nbsp&nbsp</span>
+
+            <span class="author-block">
+              <a href="https://zhi-xian-xie.github.io/" target="_blank">Zhixian Xie<sup>1</sup>, </a>&nbsp&nbsp&nbsp</span>
+
+            <span class="author-block">
+              <a href="https://rory-weicheng.github.io/" target="_blank">Wei-Cheng Huang<sup>2</sup>,</a>&nbsp&nbsp&nbsp</span>
+
+            <span class="author-block">
+              <a href="https://asu-iris.github.io/" target="_blank">Wanxin Jin<sup>1</sup></a></span>
+
+            <!-- <span class="author-block">
+              <a href="https://zhuoranyang.github.io/" target="_blank">Zhuoran Yang</a><sup>3</sup>&nbsp&nbsp</span>
+
+            <span class="author-block">
+              <a href="https://engineering.purdue.edu/AAE/people/ptProfile?resource_id=124981" target="_blank">Shaoshuai Mou</a><sup>4</sup>,&nbsp&nbsp</span>
+            </span>
+
+            <span class="author-block">
+              <a href="https://www.georgejpappas.org/" target="_blank">George J. Pappas</a><sup>5</sup>
+            </span> -->
+
+
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Arizona State University&nbsp&nbsp&nbsp</span>
+            <span class="author-block"><sup>2</sup>University of Illinois, Urbana-Champaign</span>
+            <!-- <span class="author-block"><sup>3</sup>Yale University,&nbsp&nbsp</span><br>
+            <span class="author-block"><sup>4</sup>Purdue University,&nbsp&nbsp</span>
+            <span class="author-block"><sup>5</sup>University of Pennsylvania</span> -->
+          </div>
+          
+          <div class="image-container">
+            <a href="https://asu-iris.github.io/" target="_blank">
+              <img src="./static/images/comfree-images/org_logo.png" alt="Image 1" style="width: 400px;">
+            </a>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://proceedings.neurips.cc/paper/2020/hash/5a7b238ba0f6502e5d6be14424b20ded-Abstract.html" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Preprint</span>
+                </a>
+              </span>
+              <!-- <span class="link-block">
+                <a href="https://papers.nips.cc/paper/2021/hash/85ea6fd7a2ca3960d0cf5201933ac998-Abstract.html" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>NeurIPS Paper 2</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/wanxinjin/Pontryagin-Differentiable-Programming" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code Repo</span>
+                </a>
+              </span>
+
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/wanxinjin/Pontryagin-Differentiable-Programming" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video demo</span>
+                  </a>
+                </span>
+                            <!-- Code Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/wanxinjin/Safe-PDP" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code Repo 2</span>
+                </a>
+              </span> -->
+
+              <!-- Dataset Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/askforalfred/alfred"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                </a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- teaser section (very important) -->   
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+      <h2 class="subtitle has-text-centered">
+        <figure>
+          <img src="./static/images/comfree-images/teaser.png" alt="Description of the image" style="max-width: 75%; height: auto;">
+          <figcaption class="has-text-centered"></figcaption>
+        </figure>
+        <br>
+        <b>Overview:</b> 
+        ComFree-Sim is a GPU-parallel analytical contact physics engine that utilizes complementarity-free contact
+         modeling and achieves 2-3 times higher throughput than MJWarp in dense contact scenarios while 
+         maintaining comparable physical fidelity. The system's low-latency performance significantly enhances 
+         the success rates of high-frequency controllers like MPPI for dexterous manipulation and reduces 
+         the computational overhead of dynamics-aware retargeting.
+        <br><br>
+    
+        <!-- significant video or figure goes here -->    
+        <hr>
+        <br>
+        <figure>
+          <h2 class="title is-2">Comprehensive Video Demo</h2>
+          <!-- <figcaption style="text-align: center; color: #888;">
+            Long take uncut video: Allegro hand learning dexterous manipulation from scratch on hardware
+            </figcaption> -->
+            <!-- <br> -->
+          <video id="teaser" autoplay muted loop playsinline style="width: 100%; max-width: 1000px; height: auto;">
+            <source src="./static/videos/comfree-videos/comfree_teaser.mp4"
+                    type="video/mp4">
+          </video>
+            <br>
+            <br>
+            <br>
+
+            <hr>
+            <br>
+            <h2 class="title is-2">Applications:
+            </h2>
+            <div class="columns is-mobile is-vcentered">
+              <div class="column is-half" style="background-color: white; padding: 1px;">
+                <p style="text-align: center; color: white; font-size: 20px;"><b><br>Real-Time MPC for Real World <br>Dexterous Manipulation</b></p>
+                <video class="video"  
+                  autoplay muted loop playsinline 
+                  style="width: 100%; height: 300px; display: block; margin: 0 auto;" 
+                  src="./static/videos/comfree-videos/objects_highlights.mp4"> 
+                </video>
+              </div>
+              <div class="column is-half" style="background-color: white; padding: 1px;">
+                <p style="text-align: center; color: white; font-size: 20px;"><b><br>Dynamics-Aware Retargeting For<br>Agile Locomotion</b></p>
+                <video class="video"  
+                  autoplay muted loop playsinline 
+                  style="width: 100%; height: 400px; display: block; margin: 0 auto;" 
+                  src="./static/videos/comfree-videos/retargeting_highlights.mp4"> 
+                </video>
+              </div>
+            
+            </div>
+        </figure>
+      </h2>
+  </div>
+
+</section>
+
+
+<!-- Abstract. section -->
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p class="emphasized-first-letter">
+            We propose ContactSDF, a new model that leverages signed distance functions (SDFs) to approximate multi-contact dynamics, 
+            including both collision detection and time-stepping routines. In the ContactSDF, 
+            an SDF is first constructed from the supporting plane representation of the object for collision detection, 
+            and then the obtained contact velocity dual cones are used to construct a second SDF for time stepping of contact dynamics. 
+            The two SDF constructions lead to a differentiable and closed-form multi-contact dynamic model for state prediction, 
+            different from classic complementary-based multi-contact models. 
+            ContactSDF allows for efficient model-based control and learning in contact-rich manipulation, 
+            when integrated into existing learning and control frameworks. 
+            We performed extensive simulation experiments to show the effectiveness of ContactSDF for model learning 
+            and real-time control of dexterous manipulation. We also evaluate the ContactSDF on a real-world Allegro hand for in-hand dexterous manipulation. 
+            Results show with around 2 minutes of learning, 
+            the ContactSDF achieves high-quality MPC for dexterous manipulation at a frequency of 30-60Hz.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+<!-- <section class="hero teaser">
+  <h1 class="title is-1" style="text-align: center;">Hardware Real-time Manipulation</h1>
+  <div class="container is-max-desktop">
+    <div class="content has-text-justified" style="font-size: 18px;">
+      The contactSDF model is able to capture the multi-contact dynamics quickly and facilitate the MPC to 
+      finish the dexterous manipulation task in real-time.
+      We present the complete learning from scratch process on the Allegro hand hardware in reorientation of the cube. 
+      The target is to rotate the cube in a counterclockwise direction. Each trajectory is tasked with a 90-degree incremental pose change.
+      The finger joints will be reset to the initial position after each rollout. We demonstrate that within only 2 minutes learning from the on-MPC
+      data, the task can be accomplished.
+    </div>
+      <h1 class="title is-1" style="text-align: left; font-size: 36px;">Learning from Scratch (uncut long take)</h1>
+      <div class="hero-body is-vcentered" style="background-color: rgb(0, 0, 0); padding: 1px;">
+      <video id="teaser" muted loop playsinline controls style="width: 100%; max-width: 1000px; height: auto;">
+        <source src="./static/videos/hardware/hardware_learning_from_scratch.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section> -->
+
+
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-one-thirds">
+        <h1 class="title is-1" style="text-align: left; font-size: 36px;">Hardware Manipulation Evaluation (uncut long take)</h1>
+        <div class="content has-text-justified">
+          With the learned contactSDF model, we showcase the real-time manipulation results as follows. The MPC is able to finish both 
+          counterclockwise and clockwise continuous reorientation tasks in real-time.
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-full">
+      <div class="content has-text-left">
+        <ul style="margin-top: -20px;">
+        </ul>
+      </div>
+    </div>
+
+    <div class="columns is-mobile is-vcentered">
+      <div class="column is-half" style="background-color: black; padding: 10px;">
+        <p style="text-align: center; color: white; font-size: 24px;"><b>Counterclockwise reorientation</b></p>
+        <video class="video"  
+          autoplay controls muted loop playsinline 
+          style="width: 450px; height: 300px; display: block; margin: 0 auto;" 
+          src="./static/videos/hardware/hardware_ccw.mp4"> 
+        </video>
+      </div>
+      <div class="column is-half" style="background-color: black; padding: 10px;">
+        <p style="text-align: center; color: white; font-size: 24px;"><b>Clockwise reorientation</b></p>
+        <video class="video"  
+          autoplay controls muted loop playsinline 
+          style="width: 450px; height: 300px; display: block; margin: 0 auto;" 
+          src="./static/videos/hardware/hardware_cw.mp4"> 
+        </video>
+      </div>
+    
+    </div>
+  </div>
+</section> -->
+
+
+<!-- how-it-works section -->
+
+<section class="section">
+  <div class="container is-max-desktop">
+      <hr>
+      <br>
+      <h2 class="title is-2 has-text-centered">How does ComFree-Sim work?</h2>
+      <div class="content text-align: left">
+        <br>
+        <!-- Figure -->
+        <figure>
+          <img src="./static/images/comfree-images/comfree_flowchart_4.jpg" alt="Description of the image" style="max-width: 100%; height: auto;">
+          <figcaption class="has-text-centered"></figcaption>
+        </figure>
+        <p> ComFree-Sim has two key components.<br>1. Complementarity-free contact modeling
+          <br>2. GPU implementation for contact resolution
+        </p>
+      </div>
+    <!-- </div> -->
+       <!-- /Figure -->
+      <div style="text-align: center;">
+        <video id="teaser" autoplay muted loop playsinline style="width: 75%; max-width: 1000px; height: auto;">
+            <source src="./static/videos/comfree-videos/drop_test.mp4"
+                    type="video/mp4">
+          </video>
+        <!-- <figcaption class="has-text-centered">Captions</figcaption> -->
+      </div>
+      <br>
+      <hr>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Results header. -->
+    <h1 class="title is-2 has-text-centered">More Results</h1>
+    <br>
+    <h3 class="title is-4" style="text-align: center;">Real Time MPC for Dexterous Manipulation</h3>
+    <p>In object reorientation tasks, the LEAP Hand rotates the cube to the desired pose. We implement MPPI 
+      with ComFree-Sim and achieve real-time control at ~35-72Hz. We deploy the system for 4 objects.
+    </p>
+    <br>
+
+
+    <!--/ Results header. -->
+    <div class="tabs is-toggle is-fullwidth is-centered" id="results-tabs-1">
+      <ul>
+        <li class="is-active"><a class="tab-font" data-tab="1">Cube</a></li>
+        <li><a class="tab-font" data-tab="1">Duck</a></li>
+        <li><a class="tab-font" data-tab="1">Spam Tin</a></li>
+        <li><a class="tab-font" data-tab="1">Cylinder</a></li>
+      </ul>
+    </div>
+
+    <!-- Results videos. -->
+    <div class="columns is-vcentered has-text-centered is-full-width" style="flex-wrap: wrap;">
+      <div class="column is-half">
+        <div class="publication-video">
+          <video class="interpolation-video tabs-balls-1" autoplay muted loop style="width: 100%; aspect-ratio: 4/3;">
+            <source src="./static/videos/comfree-videos/mpc/cube_pitch.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <div class="publication-video">
+          <video class="interpolation-video tabs-balls-1" autoplay muted loop style="width: 100%; aspect-ratio: 4/3;">
+            <source src="./static/videos/comfree-videos/mpc/cube_roll.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <div class="publication-video">
+          <video class="interpolation-video tabs-balls-1" autoplay muted loop style="width: 100%; aspect-ratio: 4/3;">
+            <source src="./static/videos/comfree-videos/mpc/cube_yaw.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <div class="publication-video">
+          <video class="interpolation-video tabs-balls-1" autoplay muted loop style="width: 100%; aspect-ratio: 4/3;">
+            <source src="./static/videos/comfree-videos/mpc/cube_roll_2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Results header. -->
+    <h3 class="title is-4" style="text-align: center;">Dynamics-Aware Retargeting For Agile Locomotion</h3>
+    <p>  We also demonstrate the ContactSDF model on a Allegro hand for on-palm object reorientation. 
+      The system includes a 6-DoF object laying on the palm of the Allegro hand and the fingers are actuated by a low-level joint PD controller. 
+      The goal is to reorient the object (solid) from an initial pose to a desired target pose (transparent). Click the tabs to check the manipulation results for different objects.
+    </p>
+    <br>
+
+    <!--/ Results header. -->
+
+  <!-- Vertical tabs on left, video on right -->
+  <div class="columns" style="gap: 2rem;">
+    <!-- Vertical tabs on left -->
+    <div class="column is-narrow" style="padding: 0;">
+      <div class="tabs is-toggle is-vertical" id="results-tabs-2" style="display: flex; flex-direction: column; gap: 0;">
+        <ul style="flex-direction: column; display: flex; gap: 0; border: none;">
+          <li class="is-active" style="margin: 0;"><a class="tab-font" data-tab="2" style="display: block; padding: 12px 8px; background-color: #3273dc; color: white; border-radius: 0; text-align: center; cursor: pointer; width: 150px; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis;">Cartwheels</a></li>
+          <li style="margin: 0;"><a class="tab-font" data-tab="2" style="display: block; padding: 12px 8px; background-color: #dbdbdb; color: #363636; border-radius: 0; text-align: center; cursor: pointer; width: 150px; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis;">Martial Arts</a></li>
+          <li style="margin: 0;"><a class="tab-font" data-tab="2" style="display: block; padding: 12px 8px; background-color: #dbdbdb; color: #363636; border-radius: 0; text-align: center; cursor: pointer; width: 150px; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis;">Dance</a></li>
+          <li style="margin: 0;"><a class="tab-font" data-tab="2" style="display: block; padding: 12px 8px; background-color: #dbdbdb; color: #363636; border-radius: 0; text-align: center; cursor: pointer; width: 150px; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis;">Getup</a></li>
+          <li style="margin: 0;"><a class="tab-font" data-tab="2" style="display: block; padding: 12px 8px; background-color: #dbdbdb; color: #363636; border-radius: 0; text-align: center; cursor: pointer; width: 150px; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis;">PushBox</a></li>
+          <li style="margin: 0;"><a class="tab-font" data-tab="2" style="display: block; padding: 12px 8px; background-color: #dbdbdb; color: #363636; border-radius: 0; text-align: center; cursor: pointer; width: 150px; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis;">N1 Sprint</a></li>
+          <li style="margin: 0;"><a class="tab-font" data-tab="2" style="display: block; padding: 12px 8px; background-color: #dbdbdb; color: #363636; border-radius: 0; text-align: center; cursor: pointer; width: 150px; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis;">N1 Runback</a></li>
+          <li style="margin: 0;"><a class="tab-font" data-tab="2" style="display: block; padding: 12px 8px; background-color: #dbdbdb; color: #363636; border-radius: 0; text-align: center; cursor: pointer; width: 150px; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis;">T1 Sprint</a></li>
+          <li style="margin: 0;"><a class="tab-font" data-tab="2" style="display: block; padding: 12px 8px; background-color: #dbdbdb; color: #363636; border-radius: 0; text-align: center; cursor: pointer; width: 150px; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis;">T1 Skip</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Video on right -->
+    <div class="column is-vcentered" style="padding: 75px;">
+      <div class="publication-video">
+        <video class="interpolation-video tabs-hands-2" autoplay muted loop style="width: 100%; height: auto;">
+          <source src="./static/videos/comfree-videos/retargeting/cartwheels.mp4"
+            type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+  <!--/ Results videos. -->
+
+  </div>
+</section>
+
+
+<!-- Acknowledgements -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <br>
+    <hr>
+    <br>
+    <!-- Results header. -->
+    <h1 class="title is-2 has-text-centered">Acknowledgements</h1>
+    <p>  Special thanks to...
+    </p>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <br>
+    <hr>
+    <br>
+    <h2 class="title">BibTeX</h2>
+    <div style="position: relative;">
+      <button onclick="copyToClipboard()" style="position: absolute; right: 0; top: -40px; padding: 8px 16px; background-color: #3273dc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">Copy to Clipboard</button>
+      <pre id="bibtex-content"><code>@article{TBD,
+  author    = {Yang, Wen and Jin, Wanxin},
+  title     = {ContactSDF: Signed Distance Functions as Multi-Contact Models for Dexterous Manipulation},
+  journal   = {tbd},
+  year      = {2024},
+}</code></pre>
+    </div>
+    <script>
+      function copyToClipboard() {
+        const bibtexContent = document.getElementById('bibtex-content').innerText;
+        navigator.clipboard.writeText(bibtexContent).then(() => {
+          alert('BibTeX copied to clipboard!');
+        }).catch(() => {
+          alert('Failed to copy to clipboard');
+        });
+      }
+    </script>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
