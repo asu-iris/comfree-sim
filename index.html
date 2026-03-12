@@ -214,18 +214,22 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
   <div class="container is-max-desktop">
       <h2 class="subtitle has-text-centered">
         <figure>
-          <video id="teaser" autoplay muted loop playsinline style="width: 80%; max-width: 1000px; height: auto; border: 1px solid #ccc;">
+          <video id="teaser" autoplay muted loop playsinline style="width: 100%; max-width: 1000px; height: auto; border: 1px solid #ccc;">
             <source src="./static/videos/comfree-videos/comfree_teaser_sped_up.mp4"
                     type="video/mp4">
           </video>
         </figure>
         <br>
         <b>Overview:</b> 
-        ComFree-Sim is a GPU-parallel analytical contact physics engine that utilizes complementarity-free contact
-         modeling and achieves 2-3 times higher throughput than MJWarp in dense contact scenarios while 
-         maintaining comparable physical fidelity. The system's low-latency performance significantly enhances 
-         the success rates of high-frequency controllers like MPPI for dexterous manipulation and reduces 
-         the computational overhead of dynamics-aware retargeting.
+        ComFree-Sim is a GPU-parallelized analytical physics engine powered by 
+        complementarity-free contact dynamics modeling. In dense contact scenarios, 
+        it delivers 2-3x higher throughput than MJWarp while maintaining comparable and 
+        tunable physical fidelity. This low-latency performance significantly improves the 
+        success rates of high-frequency simulation-based control for contact-rich tasks—such 
+        as dexterous manipulation and agile locomotion. Furthermore, its analytical 
+        approach to contact physics bypasses the complexity of traditional iterative 
+        solvers, offering a framework that is <strong style="font-weight: 1500;">significantly simpler, more lightweight, 
+        and easier to tune and integrate into downstream tasks.</strong>
         <br><br>
     
         <!-- significant video or figure goes here -->    
@@ -261,7 +265,7 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
         </div>
         <div class="column">
           <div style="text-align: center;">
-            <img src="./static/images/comfree-images/contacts_graph.png" alt="Contact scaling graph" style="width: 100%; max-width: 500px; height: auto;">
+            <img src="./static/images/comfree-images/throughput_scaling.jpg" alt="Throughput scaling graph" style="width: 100%; max-width: 500px; height: auto;">
           </div>
         </div>
       </div>
@@ -347,7 +351,7 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
 
     <!-- Results videos. -->
     <div class="columns is-vcentered has-text-centered is-full-width" style="flex-wrap: wrap;">
-      <div class="column is-full">
+      <div class="column is-half">
         <h3 class="title is-4">Dual Arm Lifting</h3>
         <div class="publication-video">
           <video class="interpolation-video" autoplay muted loop style="width: 100%; max-width: 600px; height: auto;">
@@ -356,9 +360,7 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
           </video>
         </div>
       </div>
-    </div>
-    <div class="columns is-vcentered has-text-centered is-full-width" style="flex-wrap: wrap; margin-top: -15.0rem;">
-      <div class="column is-full">
+      <div class="column is-half">
         <h3 class="title is-4">Dual Arm Rotating</h3>
         <div class="publication-video">
           <video class="interpolation-video" autoplay muted loop style="width: 100%; max-width: 600px; height: auto;">
@@ -368,7 +370,7 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
         </div>
       </div>
     </div>
-    <hr style="margin-top: -10rem;">
+    <hr>
   </div>
   
 </section>
@@ -436,7 +438,7 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
 </section>
 
 
-<section class="section" id="BibTeX">
+<!-- <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <br>
     <hr>
@@ -462,7 +464,7 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
       }
     </script>
   </div>
-</section>
+</section> -->
 
 
 <footer class="footer">

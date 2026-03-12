@@ -63,6 +63,10 @@ body.dark-mode code {
   color: #e0e0e0;
 }
 
+body.dark-mode strong {
+  color: #ffd700;
+}
+
 .dark-mode-toggle {
   position: fixed;
   top: 20px;
