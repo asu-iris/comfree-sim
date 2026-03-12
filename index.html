@@ -24,26 +24,11 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
   </script>
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-
-  <style>
-    .emphasized-first-letter::first-letter {
-      font-family: 'Playfair Display', serif; /* Use your chosen swash font here */
-      font-size: 2em; /* Adjust size as needed */
-      font-weight: bold; /* Optional: makes the letter bold */
-      color: #000; /* Optional: change color if needed */
-      float: left; /* Optional: positions the letter to the left */
-      margin-right: 0.1em; /* Optional: space between the letter and the rest of the text */
-    }
-
-    .tab-font {
-      font-weight: bold;
-    }
-  </style>
-
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
         rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/custom.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
@@ -58,6 +43,9 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
 
 </head>
 <body>
+
+<!-- Dark Mode Toggle Button -->
+<button class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()">🌙</button>
 
 <!-- <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
@@ -106,7 +94,7 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">ComFree-Sim: A GPU-Parallel Analytical Contact Physics Engine for Accelerating Contact-Rich Robotics Simulation and Control</h1>
+          <h1 class="title is-1 publication-title">ComFree-Sim: A GPU-Parallelized Analytical Contact Physics Engine for Scalable Contact-Rich Robotics Simulation and Control</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="https://asu-iris.github.io/" target="_blank">Chetan Borse<sup>1</sup>, </a>&nbsp&nbsp&nbsp</span>
@@ -226,8 +214,10 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
   <div class="container is-max-desktop">
       <h2 class="subtitle has-text-centered">
         <figure>
-          <img src="./static/images/comfree-images/teaser.png" alt="Description of the image" style="max-width: 75%; height: auto;">
-          <figcaption class="has-text-centered"></figcaption>
+          <video id="teaser" autoplay muted loop playsinline style="width: 80%; max-width: 1000px; height: auto; border: 1px solid #ccc;">
+            <source src="./static/videos/comfree-videos/comfree_teaser_sped_up.mp4"
+                    type="video/mp4">
+          </video>
         </figure>
         <br>
         <b>Overview:</b> 
@@ -240,169 +230,40 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
     
         <!-- significant video or figure goes here -->    
         <hr>
-        <br>
-        <figure>
-          <h2 class="title is-2">Comprehensive Video Demo</h2>
-          <!-- <figcaption style="text-align: center; color: #888;">
-            Long take uncut video: Allegro hand learning dexterous manipulation from scratch on hardware
-            </figcaption> -->
-            <!-- <br> -->
-          <video id="teaser" autoplay muted loop playsinline style="width: 100%; max-width: 1000px; height: auto;">
-            <source src="./static/videos/comfree-videos/comfree_teaser.mp4"
-                    type="video/mp4">
-          </video>
-            <br>
-            <br>
-            <br>
-
-            <hr>
-            <br>
-            <h2 class="title is-2">Applications:
-            </h2>
-            <div class="columns is-mobile is-vcentered">
-              <div class="column is-half" style="background-color: white; padding: 1px;">
-                <p style="text-align: center; color: white; font-size: 20px;"><b><br>Real-Time MPC for Real World <br>Dexterous Manipulation</b></p>
-                <video class="video"  
-                  autoplay muted loop playsinline 
-                  style="width: 100%; height: 300px; display: block; margin: 0 auto;" 
-                  src="./static/videos/comfree-videos/objects_highlights.mp4"> 
-                </video>
-              </div>
-              <div class="column is-half" style="background-color: white; padding: 1px;">
-                <p style="text-align: center; color: white; font-size: 20px;"><b><br>Dynamics-Aware Retargeting For<br>Agile Locomotion</b></p>
-                <video class="video"  
-                  autoplay muted loop playsinline 
-                  style="width: 100%; height: 400px; display: block; margin: 0 auto;" 
-                  src="./static/videos/comfree-videos/retargeting_highlights.mp4"> 
-                </video>
-              </div>
-            
-            </div>
-        </figure>
       </h2>
   </div>
 
 </section>
-
-
-<!-- Abstract. section -->
-<!-- <section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p class="emphasized-first-letter">
-            We propose ContactSDF, a new model that leverages signed distance functions (SDFs) to approximate multi-contact dynamics, 
-            including both collision detection and time-stepping routines. In the ContactSDF, 
-            an SDF is first constructed from the supporting plane representation of the object for collision detection, 
-            and then the obtained contact velocity dual cones are used to construct a second SDF for time stepping of contact dynamics. 
-            The two SDF constructions lead to a differentiable and closed-form multi-contact dynamic model for state prediction, 
-            different from classic complementary-based multi-contact models. 
-            ContactSDF allows for efficient model-based control and learning in contact-rich manipulation, 
-            when integrated into existing learning and control frameworks. 
-            We performed extensive simulation experiments to show the effectiveness of ContactSDF for model learning 
-            and real-time control of dexterous manipulation. We also evaluate the ContactSDF on a real-world Allegro hand for in-hand dexterous manipulation. 
-            Results show with around 2 minutes of learning, 
-            the ContactSDF achieves high-quality MPC for dexterous manipulation at a frequency of 30-60Hz.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-
-
-<!-- <section class="hero teaser">
-  <h1 class="title is-1" style="text-align: center;">Hardware Real-time Manipulation</h1>
-  <div class="container is-max-desktop">
-    <div class="content has-text-justified" style="font-size: 18px;">
-      The contactSDF model is able to capture the multi-contact dynamics quickly and facilitate the MPC to 
-      finish the dexterous manipulation task in real-time.
-      We present the complete learning from scratch process on the Allegro hand hardware in reorientation of the cube. 
-      The target is to rotate the cube in a counterclockwise direction. Each trajectory is tasked with a 90-degree incremental pose change.
-      The finger joints will be reset to the initial position after each rollout. We demonstrate that within only 2 minutes learning from the on-MPC
-      data, the task can be accomplished.
-    </div>
-      <h1 class="title is-1" style="text-align: left; font-size: 36px;">Learning from Scratch (uncut long take)</h1>
-      <div class="hero-body is-vcentered" style="background-color: rgb(0, 0, 0); padding: 1px;">
-      <video id="teaser" muted loop playsinline controls style="width: 100%; max-width: 1000px; height: auto;">
-        <source src="./static/videos/hardware/hardware_learning_from_scratch.mp4"
-                type="video/mp4">
-      </video>
-    </div>
-  </div>
-</section> -->
-
-
-<!-- <section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-one-thirds">
-        <h1 class="title is-1" style="text-align: left; font-size: 36px;">Hardware Manipulation Evaluation (uncut long take)</h1>
-        <div class="content has-text-justified">
-          With the learned contactSDF model, we showcase the real-time manipulation results as follows. The MPC is able to finish both 
-          counterclockwise and clockwise continuous reorientation tasks in real-time.
-        </div>
-      </div>
-    </div>
-
-    <div class="column is-full">
-      <div class="content has-text-left">
-        <ul style="margin-top: -20px;">
-        </ul>
-      </div>
-    </div>
-
-    <div class="columns is-mobile is-vcentered">
-      <div class="column is-half" style="background-color: black; padding: 10px;">
-        <p style="text-align: center; color: white; font-size: 24px;"><b>Counterclockwise reorientation</b></p>
-        <video class="video"  
-          autoplay controls muted loop playsinline 
-          style="width: 450px; height: 300px; display: block; margin: 0 auto;" 
-          src="./static/videos/hardware/hardware_ccw.mp4"> 
-        </video>
-      </div>
-      <div class="column is-half" style="background-color: black; padding: 10px;">
-        <p style="text-align: center; color: white; font-size: 24px;"><b>Clockwise reorientation</b></p>
-        <video class="video"  
-          autoplay controls muted loop playsinline 
-          style="width: 450px; height: 300px; display: block; margin: 0 auto;" 
-          src="./static/videos/hardware/hardware_cw.mp4"> 
-        </video>
-      </div>
-    
-    </div>
-  </div>
-</section> -->
-
-
 <!-- how-it-works section -->
-
 <section class="section">
   <div class="container is-max-desktop">
-      <hr>
-      <br>
       <h2 class="title is-2 has-text-centered">How does ComFree-Sim work?</h2>
       <div class="content text-align: left">
         <br>
         <!-- Figure -->
         <figure>
-          <img src="./static/images/comfree-images/comfree_flowchart_4.jpg" alt="Description of the image" style="max-width: 100%; height: auto;">
+          <img src="./static/images/comfree-images/comfree_flowchart_5.jpg" alt="Description of the image" style="max-width:80%; height: auto;">
           <figcaption class="has-text-centered"></figcaption>
         </figure>
-        <p> ComFree-Sim has two key components.<br>1. Complementarity-free contact modeling
-          <br>2. GPU implementation for contact resolution
-        </p>
       </div>
     <!-- </div> -->
        <!-- /Figure -->
-      <div style="text-align: center;">
-        <video id="teaser" autoplay muted loop playsinline style="width: 75%; max-width: 1000px; height: auto;">
-            <source src="./static/videos/comfree-videos/drop_test.mp4"
-                    type="video/mp4">
-          </video>
-        <!-- <figcaption class="has-text-centered">Captions</figcaption> -->
+        <br>
+        <br>
+      <div class="columns is-vcentered has-text-centered" style="gap: 2rem;">
+        <div class="column">
+          <div style="text-align: center;">
+            <video id="teaser" autoplay muted loop playsinline style="width: 100%; max-width: 500px; height: auto;">
+              <source src="./static/videos/comfree-videos/drop_test_website.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="column">
+          <div style="text-align: center;">
+            <img src="./static/images/comfree-images/contacts_graph.png" alt="Contact scaling graph" style="width: 100%; max-width: 500px; height: auto;">
+          </div>
+        </div>
       </div>
       <br>
       <hr>
@@ -410,12 +271,10 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
 </section>
 
 
-<section class="section">
+<section class="section" style="margin-top: -2.0rem;">
   <div class="container is-max-desktop">
     <!-- Results header. -->
-    <h1 class="title is-2 has-text-centered">More Results</h1>
-    <br>
-    <h3 class="title is-4" style="text-align: center;">Real Time MPC for Dexterous Manipulation</h3>
+    <h1 class="title is-2 has-text-centered">Comfree-Sim for Real-time Dexterous Manipulation</h1>
     <p>In object reorientation tasks, the LEAP Hand rotates the cube to the desired pose. We implement MPPI 
       with ComFree-Sim and achieve real-time control at ~35-72Hz. We deploy the system for 4 objects.
     </p>
@@ -470,15 +329,54 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
         </div>
       </div>
     </div>
+    <br>
+    <br>
+    <hr>
   </div>
+  
 </section>
 
 
-<section class="section">
+<section class="section" style="margin-top: -2.0rem;">
+  <div class="container is-max-desktop">
+    <!-- Results header. -->
+    <h1 class="title is-2 has-text-centered">ComFree-Sim for Dual Arm Manipulation</h1>
+    <p>Dual arm manipulation tasks require synchronized control of two robotic arms to perform complex object manipulation and assembly operations. ComFree-Sim enables real-time simulation and control of dual arm systems with high contact complexity.
+    </p>
+    <br>
+
+    <!-- Results videos. -->
+    <div class="columns is-vcentered has-text-centered is-full-width" style="flex-wrap: wrap;">
+      <div class="column is-full">
+        <h3 class="title is-4">Dual Arm Lifting</h3>
+        <div class="publication-video">
+          <video class="interpolation-video" autoplay muted loop style="width: 100%; max-width: 600px; height: auto;">
+            <source src="./static/videos/comfree-videos/mpc/dual_arm_lifting.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-vcentered has-text-centered is-full-width" style="flex-wrap: wrap; margin-top: -15.0rem;">
+      <div class="column is-full">
+        <h3 class="title is-4">Dual Arm Rotating</h3>
+        <div class="publication-video">
+          <video class="interpolation-video" autoplay muted loop style="width: 100%; max-width: 600px; height: auto;">
+            <source src="./static/videos/comfree-videos/mpc/dual_arm_rotating.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+    <hr style="margin-top: -10rem;">
+  </div>
+  
+</section>
+<section class="section" style="padding-top: -12.0rem;">
   <div class="container is-max-desktop">
 
     <!-- Results header. -->
-    <h3 class="title is-4" style="text-align: center;">Dynamics-Aware Retargeting For Agile Locomotion</h3>
+    <h1 class="title is-2 has-text-centered">Comfree-Sim for Dynamics-Aware Retargeting For Agile Locomotion</h1>
     <p>  We also demonstrate the ContactSDF model on a Allegro hand for on-palm object reorientation. 
       The system includes a 6-DoF object laying on the palm of the Allegro hand and the fingers are actuated by a low-level joint PD controller. 
       The goal is to reorient the object (solid) from an initial pose to a desired target pose (transparent). Click the tabs to check the manipulation results for different objects.
@@ -526,11 +424,13 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
 <section class="section">
   <div class="container is-max-desktop">
     <br>
-    <hr>
+    <hr style="margin-top: -10rem;">
     <br>
     <!-- Results header. -->
     <h1 class="title is-2 has-text-centered">Acknowledgements</h1>
-    <p>  Special thanks to...
+    <p>We thank the MuJoCo Warp (MJWarp) team at Google DeepMind and NVIDIA for making the code publicly 
+      available. We also thank Vamsi Sai Abhijit Tadepalli of the IRIS Lab for maintaining the 
+      vision-tracking module used in our real-world in-hand manipulation experiments.
     </p>
   </div>
 </section>
@@ -596,6 +496,33 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
     </div>
   </div>
 </footer>
+
+<script>
+  function toggleDarkMode() {
+    const body = document.body;
+    const toggle = document.getElementById('darkModeToggle');
+    
+    body.classList.toggle('dark-mode');
+    
+    // Save preference to localStorage
+    if (body.classList.contains('dark-mode')) {
+      localStorage.setItem('darkMode', 'enabled');
+      toggle.textContent = '☀️';
+    } else {
+      localStorage.setItem('darkMode', 'disabled');
+      toggle.textContent = '🌙';
+    }
+  }
+
+  // Load dark mode preference on page load
+  window.addEventListener('DOMContentLoaded', function() {
+    const darkModePreference = localStorage.getItem('darkMode');
+    if (darkModePreference === 'enabled') {
+      document.body.classList.add('dark-mode');
+      document.getElementById('darkModeToggle').textContent = '☀️';
+    }
+  });
+</script>
 
 </body>
 </html>

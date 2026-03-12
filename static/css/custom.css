@@ -1,0 +1,82 @@
+.emphasized-first-letter::first-letter {
+  font-family: 'Playfair Display', serif; /* Use your chosen swash font here */
+  font-size: 2em; /* Adjust size as needed */
+  font-weight: bold; /* Optional: makes the letter bold */
+  color: #000; /* Optional: change color if needed */
+  float: left; /* Optional: positions the letter to the left */
+  margin-right: 0.1em; /* Optional: space between the letter and the rest of the text */
+}
+
+.tab-font {
+  font-weight: bold;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: #0a1428;
+  color: #e0e0e0;
+}
+
+body.dark-mode .hero {
+  background-color: #0a1428;
+}
+
+body.dark-mode section {
+  background-color: #0a1428;
+}
+
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, body.dark-mode h5, body.dark-mode h6 {
+  color: #e0e0e0;
+}
+
+body.dark-mode p, body.dark-mode div {
+  color: #e0e0e0;
+}
+
+body.dark-mode .footer {
+  background-color: #050a15;
+  color: #e0e0e0;
+}
+
+body.dark-mode .box, body.dark-mode .card {
+  background-color: #1a2847;
+  border-color: #2a3d5f;
+}
+
+body.dark-mode .tabs.is-toggle li.is-active a {
+  background-color: #3273dc;
+}
+
+body.dark-mode .tabs.is-toggle li a {
+  background-color: #1a2847;
+  border-color: #2a3d5f;
+  color: #e0e0e0;
+}
+
+body.dark-mode pre {
+  background-color: #1a2847;
+  color: #e0e0e0;
+}
+
+body.dark-mode code {
+  background-color: #1a2847;
+  color: #e0e0e0;
+}
+
+.dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: #3273dc;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dark-mode-toggle:hover {
+  background-color: #2366d1;
+}
