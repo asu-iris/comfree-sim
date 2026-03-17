@@ -160,15 +160,25 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
 
 
                 <!-- Code Link. -->
-                <span class="link-block">
-                  <a href="https://youtu.be/Li6twWyLCpA?si=6ZnyGbH5p9TpJtxB" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                        <i class="fab fa-youtube"></i>
-                    </span>
-                    <span>Video demo</span>
-                  </a>
-                </span>
+              <span class="link-block">
+                <a href="https://youtu.be/Li6twWyLCpA?si=6ZnyGbH5p9TpJtxB" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video demo</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="https://irislab.tech/comfree-doc" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-book"></i>
+                  </span>
+                  <span>Documentation</span>
+                </a>
+              </span>
                             <!-- Code Link. -->
               <!-- <span class="link-block">
                 <a href="https://github.com/wanxinjin/Safe-PDP" target="_blank"
@@ -471,6 +481,9 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
         <i class="fab fa-github"></i>
       </a>
     </div>
+    <div class="content has-text-centered" style="margin-top: 1.5rem;">
+      <p>Visitors: <span id="visitor-count">0</span></p>
+    </div>
     <div class="columns is-centered">
       <div class="column is-8">
         <div class="content">
@@ -516,6 +529,21 @@ Accelerating Contact-Rich Robotics Simulation and Control</title>
       document.body.classList.add('dark-mode');
       document.getElementById('darkModeToggle').textContent = '☀️';
     }
+
+    // Increment and display visitor counter
+    const countApi = 'https://api.countapi.xyz/hit/comfree-sim.github.io/visits';
+    fetch(countApi)
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('visitor-count').textContent = data.value;
+      })
+      .catch(error => {
+        console.log('Counter service unavailable:', error);
+        // Fallback to localStorage if API fails
+        let count = parseInt(localStorage.getItem('visitCount') || '0') + 1;
+        localStorage.setItem('visitCount', count);
+        document.getElementById('visitor-count').textContent = count;
+      });
   });
 </script>
 
